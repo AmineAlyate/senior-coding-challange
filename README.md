@@ -1,5 +1,9 @@
 # Senior Software Engineer Tech Challenge 2022
 
+## Doc
+For more details about this you can check this link
+https://aminenext.atlassian.net/wiki/spaces/WRITING/pages/196609/Senior+Software+Engineer+Tech+Challenge+2022
+
 ## Challenge
 Using the GitHub API. We want to create a leaders board for contributors to a repository:
 - As a user, I can list my repositories.
