@@ -4,8 +4,8 @@ namespace App\Services\Github;
 
 use App\Models\DTO\Repository;
 use GuzzleHttp\Client;
-use Illuminate\Redis\RedisManager;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 use Throwable;
 
@@ -19,7 +19,7 @@ class GithubService
     {
         $this->client = new Client(
             [
-                RequestOptions::HEADERS => ['Content-Type' => 'application/json'],
+                RequestOptions::HEADERS      => ['Content-Type' => 'application/json'],
                 [RequestOptions::HTTP_ERRORS => false],
             ]
         );
