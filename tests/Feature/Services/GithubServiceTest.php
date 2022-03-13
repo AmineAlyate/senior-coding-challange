@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services;
 
-use App\Services\GithubService;
+use App\Services\Github\GithubService;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class GithubServiceTest extends TestCase
         /** @var GithubService $githubService */
         $githubService = app(GithubService::class);
 
-        $authResponse = $githubService->isAuthValid('amine', config('github.token'));
+        $authResponse = $githubService->assertCredentialsValid('amine', config('github.token'));
 
         $this->assertTrue($authResponse);
     }
