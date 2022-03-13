@@ -7,6 +7,7 @@ use App\Services\Github\Exceptions\BaseGithubException;
 use App\Services\Github\Exceptions\InvalidCredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -17,7 +18,7 @@ class GithubService
     public const USER_NAME = 'user_name';
     public const USER_TOKEN = 'user_token';
 
-    public function __construct(private Client $client)
+    public function __construct(private Client $client, private RedisManager $redisManager)
     {
         $this->client = new Client(
             [
@@ -27,7 +28,7 @@ class GithubService
         );
     }
 
-    public function assertCredentialsValid(string $userName, string $token): bool
+    public function assertValidCredentials(string $userName, string $token): bool
     {
         try {
             $response = $this->client->get('https://api.github.com/user', [

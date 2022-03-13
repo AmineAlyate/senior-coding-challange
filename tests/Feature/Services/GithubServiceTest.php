@@ -14,7 +14,7 @@ class GithubServiceTest extends TestCase
         /** @var GithubService $githubService */
         $githubService = app(GithubService::class);
 
-        $authResponse = $githubService->assertCredentialsValid('amine', config('github.token'));
+        $authResponse = $githubService->assertValidCredentials('amine', config('github.token'));
 
         $this->assertTrue($authResponse);
     }

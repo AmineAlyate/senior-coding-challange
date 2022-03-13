@@ -23,7 +23,7 @@ class AuthController extends Controller
             $username = $request->get('user_name');
             $token = $request->get('user_token');
 
-            $this->githubService->assertCredentialsValid($username, $token);
+            $this->githubService->assertValidCredentials($username, $token);
 
             $this->redisManager->set(GithubService::USER_NAME, $username, GithubService::AUTH_TTL);
             $this->redisManager->set(GithubService::USER_TOKEN, $token, GithubService::AUTH_TTL);
