@@ -48,7 +48,7 @@
       <td>{{ $repository->getWatchers() }}</td>
       <td>{{ $repository->getCreatedAt() }}</td>
       <td>
-        <form action="{{ route('repositories.show') }}" method="POST">
+        <form action="{{ route('github.repositories.show') }}" method="POST">
           @csrf
           <input hidden value="{{ $repository->getUrl() }}" name="url">
           <button class="px-4 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm ml-3">

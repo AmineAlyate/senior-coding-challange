@@ -29,7 +29,7 @@
 </head>
 <body class="antialiased">
 {{ var_dump($repository) }}
-<form action="{{ route('repositories.contributors') }}" method="POST">
+<form action="{{ route('github.repositories.contributors') }}" method="POST">
   @csrf
   <input hidden value="{{ $repository->getContributorsUrl() }}" name="contributors_url">
   <button class="px-4 py-2 font-semibold text-sm bg-sky-500 text-white rounded-none shadow-sm ml-3">

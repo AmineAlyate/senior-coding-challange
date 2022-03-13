@@ -10,7 +10,7 @@ class ListRepositoriesController extends Controller
     {
         return view('repositories')->with(
             [
-                'repositories' => $this->githubService->getRepositories(),
+                'repositories' => $this->githubService->getRepsdositories(),
             ]
         );
     }

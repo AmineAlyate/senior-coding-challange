@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Github\AuthController;
 use App\Http\Controllers\Github\ListRepositoriesController;
 use App\Http\Controllers\Github\ListUsersController;
 use App\Http\Controllers\Github\ShowRepositoryContributorsController;
@@ -22,8 +22,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/auth', AuthController::class)->name('auth');
-Route::get('/repositories', ListRepositoriesController::class)->name('list.repositories');
-Route::post('/show', ShowRepositoryController::class)->name('repositories.show');
-Route::post('/contributors', ShowRepositoryContributorsController::class)->name('repositories.contributors');
-Route::get('/users', ListUsersController::class)->name('list.users');
+Route::name('github.')->prefix('github')->group(function () {
+    Route::post('/auth', AuthController::class)->name('auth');
+    Route::get('/repositories', ListRepositoriesController::class)->name('list.repositories');
+    Route::post('/show', ShowRepositoryController::class)->name('repositories.show');
+    Route::post('/contributors', ShowRepositoryContributorsController::class)->name('repositories.contributors');
+    Route::get('/users', ListUsersController::class)->name('list.users');
+});

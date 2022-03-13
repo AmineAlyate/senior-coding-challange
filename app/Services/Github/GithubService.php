@@ -3,10 +3,12 @@
 namespace App\Services\Github;
 
 use App\Models\DTO\Repository;
+use App\Services\Github\Exceptions\BaseGithubException;
+use App\Services\Github\Exceptions\InvalidCredentialsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class GithubService
@@ -15,25 +17,36 @@ class GithubService
     public const USER_NAME = 'user_name';
     public const USER_TOKEN = 'user_token';
 
-    public function __construct(private Client $client, private RedisManager $redisManager)
+    public function __construct(private Client $client)
     {
         $this->client = new Client(
             [
-                RequestOptions::HEADERS      => ['Content-Type' => 'application/json'],
-                [RequestOptions::HTTP_ERRORS => false],
+                RequestOptions::HEADERS => ['Content-Type' => 'application/json'],
+                RequestOptions::HTTP_ERRORS => false,
             ]
         );
     }
 
-    public function isAuthValid(string $userName, string $token): bool
+    public function assertCredentialsValid(string $userName, string $token): bool
     {
         try {
             $response = $this->client->get('https://api.github.com/user', [
                 'auth' => [$userName, $token],
             ]);
 
+            if ($response->getStatusCode() === Response::HTTP_UNAUTHORIZED) {
+                throw new InvalidCredentialsException();
+            }
+
+            if ($response->getStatusCode() !== Response::HTTP_OK) {
+                throw new BaseGithubException();
+            }
+
             return $response->getStatusCode() === 200;
+        } catch (BaseGithubException $e) {
+            throw $e;
         } catch (Throwable $e) {
+            // Log error with the response data
         }
 
         return false;
